@@ -42,22 +42,37 @@ class scrapper:
 		response = requests.get(self.weburl)
 		html = response.content
 		soup = BeautifulSoup(html)
-		header = soup.findAll('span', attrs={'class': 'bqQuoteLink'})
+
+		header = soup.findAll('div', attrs={'class': 'boxyPaddingBig'})
+
+		
 
 		fetchedstring = unicode.join(u'\n',map(unicode,header))
+
 
 		headerarr = fetchedstring.split("<span class=\"bqQuoteLink\">")
 
 		quotearr = []
 
 		for elem in headerarr:
-			headerelem = elem[0:len(elem)-8]
-			if len(headerelem)>0:
+
+			quote_parts = elem.split("<br />")
+
+			headerelem = quote_parts[0][0:len(elem)-8]
+
+			if headerelem.find("view quote")>0:
 				BS = BeautifulSoup(headerelem.strip())
 				quote = BS.a.contents[0].strip()
-				quotearr.append(quote)
+				
 
-		quotefornow = quotearr[randint(0,len(quotearr))]
+				header_autor = quote_parts[1]
+
+				BS2 = BeautifulSoup(header_autor.strip())
+				header_autor = BS2.a.contents[0].strip()
+
+				quotearr.append(quote+": "+header_autor)
+
+		quotefornow = quotearr[randint(0,len(quotearr)-1)]
 			
 		command = "/usr/bin/notify-send -t 18000 'Quote for today' \'"+quotefornow+"\'"
 		print command
@@ -92,14 +107,14 @@ urlstofetch = ["http://www.brainyquote.com/quotes_of_the_day.html","http://www.b
 "http://www.brainyquote.com/quotes/authors/w/winston_churchill.html",
 "http://www.brainyquote.com/quotes/authors/j/jim_morrison.html",
 "http://www.brainyquote.com/quotes/authors/j/john_lennon.html",
-"http://www.brainyquote.com/quotes/authors/j/john_lennon.html",
 "http://www.brainyquote.com/quotes/authors/m/mark_twain.html",
 "http://www.brainyquote.com/quotes/authors/n/nelson_mandela.html",
 "http://www.brainyquote.com/quotes/authors/g/george_bernard_shaw.html",
 "http://www.brainyquote.com/quotes/authors/b/bob_marley.html",
-"http://www.brainyquote.com/quotes/authors/m/muhammad_ali.html"]
+"http://www.brainyquote.com/quotes/authors/m/muhammad_ali.html",
+"http://www.brainyquote.com/quotes/authors/r/ralph_waldo_emerson.html"]
 
-scrapperobj = scrapper(urlstofetch[randint(0,len(urlstofetch))])
+scrapperobj = scrapper(urlstofetch[randint(0,len(urlstofetch)-1)])
 
 print "This scrapper object will scrappe :",scrapperobj.weburl
 
