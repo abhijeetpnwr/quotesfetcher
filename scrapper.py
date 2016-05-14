@@ -59,7 +59,7 @@ class scrapper:
 
 		quotefornow = quotearr[randint(0,len(quotearr))]
 			
-		command = "/usr/bin/notify-send  'Quote for today' \'"+quotefornow+"\'"
+		command = "/usr/bin/notify-send -t 10000 'Quote for today' \'"+quotefornow+"\'"
 		print command
 		
 		os.system(command)
@@ -79,7 +79,25 @@ urlstofetch = ["http://www.brainyquote.com/quotes_of_the_day.html","http://www.b
 "http://www.brainyquote.com/quotes/topics/topic_education.html",
 "http://www.brainyquote.com/quotes/topics/topic_leadership.html",
 "http://www.brainyquote.com/quotes/topics/topic_smile.html",
-"http://www.brainyquote.com/quotes/topics/topic_work.html"]
+"http://www.brainyquote.com/quotes/topics/topic_work.html",
+"http://www.brainyquote.com/quotes/authors/s/steve_jobs.html",
+"http://www.brainyquote.com/quotes/authors/b/bill_gates.html",
+"http://www.brainyquote.com/quotes/authors/p/peter_drucker.html",
+"http://www.brainyquote.com/quotes/authors/a/a_p_j_abdul_kalam.html",
+"http://www.brainyquote.com/quotes/authors/a/albert_einstein.html",
+"http://www.brainyquote.com/quotes/authors/n/napoleon_bonaparte.html",
+"http://www.brainyquote.com/quotes/authors/m/muhammad_ali.html",
+"http://www.brainyquote.com/quotes/authors/w/will_smith.html",
+"http://www.brainyquote.com/quotes/authors/w/william_shakespeare.html",
+"http://www.brainyquote.com/quotes/authors/w/winston_churchill.html",
+"http://www.brainyquote.com/quotes/authors/j/jim_morrison.html",
+"http://www.brainyquote.com/quotes/authors/j/john_lennon.html",
+"http://www.brainyquote.com/quotes/authors/j/john_lennon.html",
+"http://www.brainyquote.com/quotes/authors/m/mark_twain.html",
+"http://www.brainyquote.com/quotes/authors/n/nelson_mandela.html",
+"http://www.brainyquote.com/quotes/authors/g/george_bernard_shaw.html",
+"http://www.brainyquote.com/quotes/authors/b/bob_marley.html",
+"http://www.brainyquote.com/quotes/authors/m/muhammad_ali.html"]
 
 scrapperobj = scrapper(urlstofetch[randint(0,len(urlstofetch))])
 
