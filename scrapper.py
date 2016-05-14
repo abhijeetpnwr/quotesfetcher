@@ -44,23 +44,29 @@ class scrapper:
 		soup = BeautifulSoup(html)
 		header = soup.findAll('span', attrs={'class': 'bqQuoteLink'})
 
+		print header
 
 		fetchedstring = unicode.join(u'\n',map(unicode,header))
 
 		headerarr = fetchedstring.split("<span class=\"bqQuoteLink\">")
 
+		quotearr = []
+
 		for elem in headerarr:
 			headerelem = elem[0:len(elem)-8]
-			print "-----------"
-			print headerelem
-			print "---------****** ----------"
 			if len(headerelem)>0:
 				BS = BeautifulSoup(headerelem.strip())
 				quote = BS.a.contents[0].strip()
-				command = "notify-send  'Quote for today' \'"+quote+"\'"
-				print command
-				os.system(command)
-			time.sleep(5)
+				quotearr.append(quote)
+
+		quotefornow = quotearr[randint(0,len(quotearr))]
+
+		print quotefornow
+			
+		command = "notify-send  'Quote for today' \'"+quotefornow+"\'"
+		
+		os.system(command)
+
 
 
 #scrapperobj = scrapper("http://www.brainyquote.com/quotes/topics/topic_motivational.html")
