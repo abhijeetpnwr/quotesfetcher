@@ -44,8 +44,6 @@ class scrapper:
 		soup = BeautifulSoup(html)
 		header = soup.findAll('span', attrs={'class': 'bqQuoteLink'})
 
-		print header
-
 		fetchedstring = unicode.join(u'\n',map(unicode,header))
 
 		headerarr = fetchedstring.split("<span class=\"bqQuoteLink\">")
@@ -60,10 +58,9 @@ class scrapper:
 				quotearr.append(quote)
 
 		quotefornow = quotearr[randint(0,len(quotearr))]
-
-		print quotefornow
 			
-		command = "notify-send  'Quote for today' \'"+quotefornow+"\'"
+		command = "/usr/bin/notify-send  'Quote for today' \'"+quotefornow+"\'"
+		print command
 		
 		os.system(command)
 
