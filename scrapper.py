@@ -59,7 +59,7 @@ class scrapper:
 
 		quotefornow = quotearr[randint(0,len(quotearr))]
 			
-		command = "/usr/bin/notify-send -t 10000 'Quote for today' \'"+quotefornow+"\'"
+		command = "/usr/bin/notify-send -t 18000 'Quote for today' \'"+quotefornow+"\'"
 		print command
 		
 		os.system(command)
