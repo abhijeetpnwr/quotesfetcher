@@ -1,6 +1,8 @@
 import sys
 import os
+import time
 
+from random import randint
 
 #Check for beauifull soup installation
 try:
@@ -41,22 +43,42 @@ class scrapper:
 		html = response.content
 		soup = BeautifulSoup(html)
 		header = soup.findAll('span', attrs={'class': 'bqQuoteLink'})
+
+
 		fetchedstring = unicode.join(u'\n',map(unicode,header))
 
-		print fetchedstring
+		headerarr = fetchedstring.split("<span class=\"bqQuoteLink\">")
 
-		BS = BeautifulSoup(fetchedstring)
+		for elem in headerarr:
+			headerelem = elem[0:len(elem)-8]
+			print "-----------"
+			print headerelem
+			print "---------****** ----------"
+			if len(headerelem)>0:
+				BS = BeautifulSoup(headerelem.strip())
+				quote = BS.a.contents[0].strip()
+				command = "notify-send  'Quote for today' \'"+quote+"\'"
+				print command
+				os.system(command)
+			time.sleep(5)
 
-		print BS
 
-		quote = BS.a.contents[0].strip()
-
-		command = "notify-send  'Quote for today' \'"+quote+"\'"
-		print command
-		os.system(command)
+#scrapperobj = scrapper("http://www.brainyquote.com/quotes/topics/topic_motivational.html")
 
 
-scrapperobj = scrapper("http://www.brainyquote.com/quotes_of_the_day.html")
+urlstofetch = ["http://www.brainyquote.com/quotes_of_the_day.html","http://www.brainyquote.com/quotes/topics/topic_motivational.html",
+"http://www.brainyquote.com/quotes/authors/m/mark_zuckerberg.html","http://www.brainyquote.com/quotes/topics/topic_motivational.html",
+"http://www.brainyquote.com/quotes/topics/topic_inspirational.html",
+"http://www.brainyquote.com/quotes/topics/topic_life.html",
+"http://www.brainyquote.com/quotes/topics/topic_funny.html",
+"http://www.brainyquote.com/quotes/topics/topic_positive.html",
+"http://www.brainyquote.com/quotes/topics/topic_success.html",
+"http://www.brainyquote.com/quotes/topics/topic_education.html",
+"http://www.brainyquote.com/quotes/topics/topic_leadership.html",
+"http://www.brainyquote.com/quotes/topics/topic_smile.html",
+"http://www.brainyquote.com/quotes/topics/topic_work.html"]
+
+scrapperobj = scrapper(urlstofetch[randint(0,len(urlstofetch))])
 
 print "This scrapper object will scrappe :",scrapperobj.weburl
 
