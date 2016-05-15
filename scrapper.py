@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import sys
 import os
 import time
@@ -40,7 +42,8 @@ class scrapper:
 	def  selector(self):
 
 		response = requests.get(self.weburl)
-		html = response.content
+
+		html = response.content.encode("utf8")
 		soup = BeautifulSoup(html)
 
 		header = soup.findAll('div', attrs={'class': 'boxyPaddingBig'})
@@ -63,6 +66,8 @@ class scrapper:
 			if headerelem.find("view quote")>0:
 				BS = BeautifulSoup(headerelem.strip())
 				quote = BS.a.contents[0].strip()
+
+				quote = quote.replace("&#39;","'")
 				
 
 				header_autor = quote_parts[1]
@@ -74,7 +79,7 @@ class scrapper:
 
 		quotefornow = quotearr[randint(0,len(quotearr)-1)]
 			
-		command = "/usr/bin/notify-send -t 18000 'Quote for today' \'"+quotefornow+"\'"
+		command = "/usr/bin/notify-send -t 18000 -i face-glasses  'Quote for today' \""+quotefornow+"\""
 		print command
 		
 		os.system(command)
@@ -106,6 +111,7 @@ urlstofetch = ["http://www.brainyquote.com/quotes_of_the_day.html","http://www.b
 "http://www.brainyquote.com/quotes/authors/w/william_shakespeare.html",
 "http://www.brainyquote.com/quotes/authors/w/winston_churchill.html",
 "http://www.brainyquote.com/quotes/authors/j/jim_morrison.html",
+"http://www.brainyquote.com/quotes/authors/j/john_lennon.html",
 "http://www.brainyquote.com/quotes/authors/j/john_lennon.html",
 "http://www.brainyquote.com/quotes/authors/m/mark_twain.html",
 "http://www.brainyquote.com/quotes/authors/n/nelson_mandela.html",
